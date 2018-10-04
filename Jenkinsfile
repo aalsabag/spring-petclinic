@@ -9,21 +9,8 @@ pipeline {
         }
         stage('UploadArtifact') {
             steps {
-                nexusArtifactUploader{
-                    artifactId: 'com.liatrio.sprint-petclinic',
-                    file: 'target/spring-petclinic-2.0.0.BUILD-SNAPSHOT.jar',
-                    groupId: 'spring',
-                    type:'jar',
-                    nexusPassword: 'admin123',
-                    nexusUrl: 'localhost:8081/nexus',
-                    nexusUser: 'admin',
-                    nexusVersion: 'nexus3',
-                    protocol: 'http',
-                    repository: 'maven-snapshots',
-                    version: '2.0.0-SNAPSHOT'
-                }
+                sh "mvn deploy:deploy-file -DgroupId=com.liatrio -DartifactId=project -Dversion=1.0.0-SNAPSHOT -DgeneratePom=true -Dpackaging=jar -DrepositoryId=nexus -Durl=http://localhost:8081/repository/maven-snapshots -Dfile=target/spring-petclinic-2.0.0.BUILD-SNAPSHOT.jar"
             }
         }
     }
 }
-
