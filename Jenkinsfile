@@ -4,12 +4,11 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building..'
-                mvn package -DskipTests
+                sh "mvn package -DskipTests"
             }
         }
         stage('UploadArtifact') {
-            nexusArtifactUploader
+            nexusArtifactUploader(
                 artifactId: 'com.liatrio.sprint-petclinic',
                 file: 'target/spring-petclinic-2.0.0.BUILD-SNAPSHOT.jar',
                 groupId: 'spring',
@@ -21,6 +20,7 @@ pipeline {
                 protocol: 'http',
                 repository: 'maven-snapshots',
                 version: '2.0.0-SNAPSHOT'
+            )
         }
     }
 }
