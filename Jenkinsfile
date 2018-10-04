@@ -7,7 +7,7 @@ pipeline {
                 sh "mvn package -DskipTests"
             }
         }
-        stage('UploadArtifact') {
+        steps('UploadArtifact') {
             nexusArtifactUploader(
                 artifactId: 'com.liatrio.sprint-petclinic',
                 file: 'target/spring-petclinic-2.0.0.BUILD-SNAPSHOT.jar',
